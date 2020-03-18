@@ -5,8 +5,8 @@
       <a href="https://github.com/Antabot/White-Jotter" target="_blank">
         <img src="../../assets/img/icon/icon6.png" alt="" class="git-link">
       </a>
-      <a href="https://blog.csdn.net/Neuf_Soleil" target="_blank">
-        <img src="../../assets/img/icon/csdn.png" alt="" class="csdn-link">
+      <a href="https://github.com/fzw6186783/wj" target="_blank">
+        <img src="../../assets/img/icon/icon6.png" alt="" class="csdn-link">
       </a>
     </el-card>
   </div>
