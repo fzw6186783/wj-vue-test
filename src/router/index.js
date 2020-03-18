@@ -1,65 +1,170 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// 导入刚才编写的组件
 import AppIndex from '../components/home/AppIndex'
+import Articles from '../components/jotter/Articles'
+import Editor from '../components/admin/content/ArticleEditor'
+import LibraryIndex from '../components/library/LibraryIndex'
 import Login from '../components/Login'
-import HelloWorld from '../components/HelloWorld'
 import Home from '../components/Home'
-import LibraryIndex from "../components/library/LibraryIndex";
-import register from "../components/register";
+
+import Register from '../components/Register'
+import AdminIndex from '../components/admin/AdminIndex'
+import DashBoard from '../components/admin/dashboard/admin/index'
+import ArticleDetails from '../components/jotter/ArticleDetails'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',//去除#
+  mode: 'history',
   routes: [
-    // 下面都是固定的写法
     {
+      path: '/',
+      name: 'Default',
+      redirect: '/home',
+      component: Home
+    },
+    {
+      // home页面并不需要被访问，只是作为其它组件的父组件
       path: '/home',
       name: 'Home',
       component: Home,
-      // home页面并不需要被访问
       redirect: '/index',
       children: [
-
         {
           path: '/index',
           name: 'AppIndex',
-          component: AppIndex,
-          meta: {
-            requireAuth: true// 表 示是否需要登录验证
-          }
+          component: AppIndex
         },
         {
-          path: '/library',
-          name: 'Library',
-          component: LibraryIndex,
+          path: '/jotter',
+          name: 'Jotter',
+          component: Articles
+        },
+        {
+          path: '/jotter/article',
+          name: 'Article',
+          component: ArticleDetails
+        },
+        {
+          path: '/admin/content/editor',
+          name: 'Editor',
+          component: Editor,
           meta: {
             requireAuth: true
           }
         },
         {
-          path: '/hello',
-          name: 'HelloWorld',
-          component: HelloWorld
+          path: '/library',
+          name: 'Library',
+          component: LibraryIndex
         }
       ]
-
     },
     {
       path: '/login',
       name: 'Login',
       component: Login
-
-
-
     },
     {
       path: '/register',
       name: 'Register',
-      component: register
+      component: Register
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminIndex,
+      meta: {
+        requireAuth: true
+      },
+      children: [
+        {
+          path: '/admin/dashboard',
+          name: 'dashboard',
+          component: DashBoard,
+          meta: {
+            requireAuth: true
+          }
+        }
+      ]
     }
-
   ]
 })
 
+// 用于创建默认路由
+export const createRouter = routes => new Router({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      name: 'Default',
+      redirect: '/home',
+      component: Home
+    },
+    {
+      // home页面并不需要被访问，只是作为其它组件的父组件
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      redirect: '/index',
+      children: [
+        {
+          path: '/index',
+          name: 'AppIndex',
+          component: AppIndex
+        },
+        {
+          path: '/jotter',
+          name: 'Jotter',
+          component: Articles
+        },
+        {
+          path: '/jotter/article',
+          name: 'Article',
+          component: ArticleDetails
+        },
+        {
+          path: '/admin/content/editor',
+          name: 'Editor',
+          component: Editor,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/library',
+          name: 'Library',
+          component: LibraryIndex
+        }
+      ]
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminIndex,
+      meta: {
+        requireAuth: true
+      },
+      children: [
+        {
+          path: '/admin/dashboard',
+          name: 'dashboard',
+          component: DashBoard,
+          meta: {
+            requireAuth: true
+          }
+        }
+      ]
+    }
+  ]
+})
