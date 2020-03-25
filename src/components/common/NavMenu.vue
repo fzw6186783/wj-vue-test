@@ -19,11 +19,13 @@
         style="width: 300px;position:absolute;margin-top: 12px;right: 18%"
         v-model="keywords">
       </el-input>
+
     </el-menu>
   </div>
 </template>
 
 <script>
+
   export default {
     name: 'NavMenu',
     data () {

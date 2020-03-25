@@ -88,7 +88,8 @@
             </el-button>
             <el-button
               type="text"
-              size="small">
+              size="small"
+              @click="deleteRole(scope.row)">
               移除
             </el-button>
           </template>
@@ -210,6 +211,23 @@
         this.$refs.tree.setCheckedKeys(menuIds)
       }
     },
+      deleteRole(role){
+        let _this = this
+        this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+        this.$axios.put('/admin/role/delete', {
+          id: role.id
+        }).then(resp => {
+          if (resp && resp.status === 200) {
+            this.$alert(resp.data.data)
+            this.dialogFormVisible = false
+            this.listRoles()
+          }
+        })
+      })},
       onSubmit (role) {
         let _this = this
         // 根据视图绑定的角色 id 向后端传送角色信息

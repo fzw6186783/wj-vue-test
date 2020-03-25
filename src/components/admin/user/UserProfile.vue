@@ -101,6 +101,7 @@
             </el-button>
             <el-button
               type="text"
+              @click.native.prevent="deleteUser(scope.row.id)"
               size="small">
               移除
             </el-button>
@@ -186,6 +187,7 @@
             }
           }
           this.$axios.put('/admin/user', {
+            id:user.id,
             username: user.username,
             name: user.name,
             phone: user.phone,
@@ -208,6 +210,28 @@
             roleIds.push(user.roles[i].id)
           }
           this.selectedRolesIds = roleIds
+        },
+        deleteUser(id){
+          this.$confirm('此操作将永久删除该人物, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              this.$axios
+                .post('/admin/user/delete', {id: id}).then(resp => {
+                if (resp && resp.status === 200) {
+                  //this.loadBooks()
+                  this.$alert('删除成功'+id)
+                  this.listUsers()
+                }
+              })
+            }
+          ).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })
+          })
         },
         resetPassword (username) {
           this.$axios.put('/admin/user/password', {
